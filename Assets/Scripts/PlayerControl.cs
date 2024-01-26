@@ -4,7 +4,6 @@ using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
-using static UnityEditor.AI.NavMeshBuilder;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -58,7 +57,7 @@ public class PlayerControl : MonoBehaviour
     {
         Vector3Int cell_pos = gridLayout.WorldToCell(transform.position);
         var obj = Instantiate(bombPrefab, grid.GetCellCenterWorld(cell_pos) + new Vector3(0, height_offset, 0), new Quaternion());
-        Invoke("RebuildNavMesh", 3.5f);
+        Invoke("RebuildNavMesh", 3f);
     }
 
     private void RebuildNavMesh()
