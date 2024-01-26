@@ -7,30 +7,42 @@ public class SceneManagement : MonoBehaviour
 {
     [SerializeField] private GameObject WinText;
     [SerializeField] private GameObject LoseText;
-    [SerializeField] private AudioClip WinSound;
-    [SerializeField] private AudioClip LoseSound;
-    private Canvas canvas;
+    [SerializeField] private AudioSource winSourse;
+    [SerializeField] private AudioSource loseSourse;
+    [SerializeField] private Sprite pauseButton;
+    [SerializeField] private Sprite playButton;
+    private bool paused = false;
 
-    private void Start()
-    {
-        canvas = GetComponentInParent<Canvas>();
-    }
-
-    private void Quit()
+    public void Quit()
     {
         Debug.Log("Quit");
         Application.Quit();
     }
 
-    private void BackToMenu()
+    public void BackToMenu()
     {
         SceneManager.LoadScene("Menu");
     }
 
-    private void StartGame()
+    public void StartGame()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("Level");
+    }
+
+    public void Pause()
+    {
+        paused = !paused;
+        if (paused)
+        {
+            Time.timeScale = 0;
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            Time.timeScale = 1;
+            gameObject.SetActive(false);
+        }
     }
 
     public void ShowUI(bool won)
@@ -43,16 +55,16 @@ public class SceneManagement : MonoBehaviour
 
     private void WonUI()
     {
-        AudioSource.PlayClipAtPoint(WinSound, transform.position);
-        canvas.enabled = true;
+        gameObject.SetActive(true);
+        winSourse.Play();
         WinText.SetActive(true);
         LoseText.SetActive(false);
     }
 
     private void LostUI()
     {
-        AudioSource.PlayClipAtPoint(LoseSound, transform.position);
-        canvas.enabled = true;
+        gameObject.SetActive(true);
+        loseSourse.Play();
         WinText.SetActive(false);
         LoseText.SetActive(true);
     }
