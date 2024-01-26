@@ -1,16 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneManagement : MonoBehaviour
 {
-    [SerializeField] private GameObject WinText;
-    [SerializeField] private GameObject LoseText;
+    [SerializeField] private TMP_Text text;
     [SerializeField] private AudioSource winSourse;
     [SerializeField] private AudioSource loseSourse;
-    [SerializeField] private Sprite pauseButton;
-    [SerializeField] private Sprite playButton;
     private bool paused = false;
 
     public void Quit()
@@ -35,6 +33,7 @@ public class SceneManagement : MonoBehaviour
         paused = !paused;
         if (paused)
         {
+            text.text = "Пауза";
             Time.timeScale = 0;
             gameObject.SetActive(true);
         }
@@ -57,15 +56,13 @@ public class SceneManagement : MonoBehaviour
     {
         gameObject.SetActive(true);
         winSourse.Play();
-        WinText.SetActive(true);
-        LoseText.SetActive(false);
+        text.text = "Победа!";
     }
 
     private void LostUI()
     {
         gameObject.SetActive(true);
         loseSourse.Play();
-        WinText.SetActive(false);
-        LoseText.SetActive(true);
+        text.text = "Поражение...";
     }
 }
